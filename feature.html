@@ -1,0 +1,1516 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SmartBooks - Nigeria's Premier Digital Textbook App</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#205595",
+            secondary: "#10B981",
+            accent: "#F59E0B",
+            dark: {
+              900: "#0F172A",
+              800: "#1E293B",
+              700: "#334155",
+            },
+          },
+          fontFamily: {
+            nunito: ["Nunito", "sans-serif"],
+            inter: ["Inter", "sans-serif"],
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    .glassmorphism {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    .dark .glassmorphism {
+      background: rgba(30, 41, 59, 0.7);
+    }
+  </style>
+</head>
+
+<body class="font-inter bg-gray-50 dark:bg-dark-900 transition-colors duration-300">
+  <header x-data="{ open: false, scrolled: false }" @scroll.window="scrolled = window.scrollY > 50"
+    class="fixed w-full z-50 transition-all duration-300"
+    :class="scrolled ? 'bg-white/90 dark:bg-dark-800/90 shadow-sm py-2' : 'bg-transparent py-4'">
+    <div class="container mx-auto px-6">
+      <div class="flex items-center justify-between">
+        <!-- Logo -->
+        <img src="/image/logo.png" alt="SmartBooks" width="150px">
+        <a href="/" class="flex items-center space-x-2">
+          <path
+            d="M12 6.25278V19.2528M12 6.25278C10.8324 5.47686 9.24649 5 7.5 5C5.75351 5 4.16756 5.47686 3 6.25278V19.2528C4.16756 18.4769 5.75351 18 7.5 18C9.24649 18 10.8324 18.4769 12 19.2528M12 6.25278C13.1676 5.47686 14.7535 5 16.5 5C18.2465 5 19.8324 5.47686 21 6.25278V19.2528C19.8324 18.4769 18.2465 18 16.5 18C14.7535 18 13.1676 18.4769 12 19.2528"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <span </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center space-x-8">
+              <a href="index.html"
+                class="text-primary dark:text-primary font-medium border-b-2 border-primary hover:text-sky-500 dark:hover:text-dark-700 transition-colors font-medium"">Home</a>
+              <a href="about.html"
+                class="text-primary dark:text-primary font-medium border-b-2 border-primary hover:text-sky-500 dark:hover:text-dark-700 transition-colors font-medium"">About
+                Us</a>
+              <a href="feature.html"
+                class="text-primary dark:text-primary font-medium border-b-2 border-primary hover:text-sky-500 dark:hover:text-dark-700 transition-colors font-medium">Features
+              </a>
+              <a href="order.html"
+                class="text-primary dark:text-primary font-medium border-b-2 border-primary hover:text-sky-500 dark:hover:text-dark-700 transition-colors font-medium"">Order</a>
+              <a href="contact.html"
+                class="text-primary dark:text-primary font-medium border-b-2 border-primary hover:text-sky-500 dark:hover:text-dark-700 transition-colors font-medium">Contact</a>
+    
+              <!-- Theme Toggle -->
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" id="theme-toggle" class="sr-only peer" />
+                <div
+                  class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary">
+                </div>
+                <span class="ml-3 text-sm font-medium text-dark-700 dark:text-gray-300">Dark Mode</span>
+              </label>
+    
+              <a href="/order"
+                class="bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-lg font-medium transition-colors shadow-md hover:shadow-lg">Get
+                Started</a>
+            </nav>
+
+            <!-- Mobile menu button -->
+            <button @click="open = !open" class="md:hidden text-dark-700 dark:text-gray-300">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                </path>
+              </svg>
+            </button>
+      </div>
+
+      <!-- Mobile Navigation -->
+      <div x-show="open" @click.away="open = false"
+        class="md:hidden mt-4 py-4 px-6 bg-white dark:bg-dark-800 rounded-lg shadow-lg"
+        x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95"
+        x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150"
+        x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95">
+        <div class="flex flex-col space-y-4">
+          <a href="index.html"
+            class="text-dark-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors font-medium">Home</a>
+          <a href="#solutions"
+            class="text-dark-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors font-medium">For
+            Schools</a>
+          <a href="#parents"
+            class="text-dark-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors font-medium">For
+            Parents</a>
+          <a href="#affiliates"
+            class="text-dark-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors font-medium">Affiliates</a>
+
+          <div class="flex items-center justify-between pt-2">
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" id="theme-toggle-mobile" class="sr-only peer" />
+              <div
+                class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary">
+              </div>
+              <span class="ml-3 text-sm font-medium text-dark-700 dark:text-gray-300">Dark Mode</span>
+            </label>
+          </div>
+
+          <a href="/order"
+            class="bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-lg font-medium transition-colors text-center shadow-md hover:shadow-lg">Get
+            Started</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Features Page Hero Section -->
+    <section class="relative h-screen min-h-[700px] bg-white dark:bg-dark-900 overflow-hidden">
+      <!-- Animated Background Gradient -->
+      <div class="absolute inset-0 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-primary/5 via-primary/10 to-secondary/5 dark:from-dark-800 dark:via-dark-750 dark:to-dark-700 opacity-100 animate-gradient-shift"></div>
+        
+        <!-- Floating particles/animated shapes -->
+        <div class="absolute inset-0 overflow-hidden opacity-20 dark:opacity-10">
+          <div class="absolute top-1/4 left-1/4 w-16 h-16 rounded-full bg-primary blur-xl animate-float-1"></div>
+          <div class="absolute top-1/3 right-1/3 w-24 h-24 rounded-full bg-secondary blur-xl animate-float-2"></div>
+          <div class="absolute bottom-1/4 left-2/3 w-20 h-20 rounded-full bg-accent blur-xl animate-float-3"></div>
+          <div class="absolute bottom-1/3 right-1/4 w-12 h-12 rounded-full bg-primary blur-xl animate-float-4"></div>
+        </div>
+      </div>
+    
+      <div class="container mx-auto px-6 py-24 lg:py-32 relative z-10">
+        <div class="flex flex-col lg:flex-row items-center gap-12">
+          <!-- Left Column - Text Content -->
+          <div class="lg:w-1/2 z-10">
+            <div class="overflow-hidden">
+              <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-dark-800 dark:text-white mb-6 leading-tight animate-text-reveal">
+                <span class="inline-block overflow-hidden">
+                  <span class="inline-block animate-text-slide-up">Everything You Need for</span>
+                </span>
+                <br>
+                <span class="inline-block overflow-hidden">
+                  <span class="text-primary animate-text-slide-up [animation-delay:0.2s]">Smarter Learning</span>
+                </span>
+              </h1>
+            </div>
+    
+            <div class="overflow-hidden">
+              <p class="text-xl text-dark-600 dark:text-gray-300 mb-8 max-w-lg animate-text-reveal [animation-delay:0.3s]">
+                Offline digital textbooks with gamified lessons, voice coaching, and full curriculum alignment for
+                Nigerian primary and secondary schools.
+              </p>
+            </div>
+    
+            <div class="flex flex-col sm:flex-row gap-4 animate-fade-in [animation-delay:0.4s]">
+              <!-- Download CTA -->
+              <a href="#download"
+                class="group bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-lg font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-300 text-center flex items-center justify-center relative overflow-hidden">
+                <span class="relative z-10 flex items-center">
+                  Download Now
+                  <svg class="ml-2 w-5 h-5 group-hover:translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                  </svg>
+                </span>
+                <span class="absolute inset-0 bg-gradient-to-r from-primary to-secondary opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+              </a>
+    
+              <!-- Video Demo CTA -->
+              <button @click="showVideo = true"
+                class="group flex items-center justify-center gap-2 bg-white dark:bg-dark-700 hover:bg-gray-100 dark:hover:bg-dark-600 text-dark-800 dark:text-white px-8 py-4 rounded-lg font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden">
+                <span class="relative z-10 flex items-center">
+                  <svg class="w-5 h-5 text-primary group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                      d="M6.3 2.841A1.5 1.5 0 004 4.11v11.78a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z">
+                    </path>
+                  </svg>
+                  Watch Demo
+                </span>
+                <span class="absolute inset-0 bg-white/10 dark:bg-dark-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+              </button>
+            </div>
+    
+            <!-- Trust indicators -->
+            <div class="mt-12 flex flex-wrap gap-6 items-center animate-fade-in [animation-delay:0.5s]">
+              <div class="flex items-center gap-2">
+                <div class="flex -space-x-2">
+                  <img src="https://randomuser.me/api/portraits/women/12.jpg" class="w-8 h-8 rounded-full border-2 border-white dark:border-dark-800" alt="User">
+                  <img src="https://randomuser.me/api/portraits/men/32.jpg" class="w-8 h-8 rounded-full border-2 border-white dark:border-dark-800" alt="User">
+                  <img src="https://randomuser.me/api/portraits/women/45.jpg" class="w-8 h-8 rounded-full border-2 border-white dark:border-dark-800" alt="User">
+                </div>
+                <span class="text-sm text-dark-600 dark:text-gray-400">Trusted by 500+ schools</span>
+              </div>
+              <div class="h-6 w-px bg-gray-300 dark:bg-dark-600"></div>
+              <div class="flex items-center gap-2">
+                <div class="flex items-center">
+                  <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                  </svg>
+                  <span class="ml-1 text-dark-800 dark:text-white">4.9</span>
+                  <span class="text-dark-600 dark:text-gray-400 ml-1">(1.2k reviews)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+    
+          <!-- Right Column - Visual -->
+          <div class="lg:w-1/2 z-10 py-20">
+            <div class="relative">
+              <!-- Device Frame with 3D perspective -->
+              <div class="relative mx-auto transform-style-preserve-3d perspective-1000" style="max-width: 900px; height: 480px">
+                <div class="relative w-full h-full animate-float-slow">
+                  <!-- App Screenshot with floating animation -->
+                  <img
+                    src="/image/laptop_with_screenshot.png"
+                    alt="SmartBooks app interface"
+                    class="rounded-[26px] shadow-2xl transform transition-transform duration-700 hover:rotate-y-12"
+                  />
+                  
+                  <!-- Screen content animation -->
+                  <div class="absolute inset-0 overflow-hidden rounded-[26px]">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+                  </div>
+                </div>
+              </div>
+  
+              <div
+                class="absolute -top-6 -right-6 bg-white dark:bg-dark-800 p-3 rounded-xl shadow-lg border border-gray-200 dark:border-dark-600 animate-float-element [animation-delay:0.5s] hover:-translate-y-1 transition-transform">
+                <div class="flex items-center">
+                  <div class="bg-secondary/10 p-2 rounded-lg mr-3">
+                    <svg class="w-6 h-6 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <p class="font-bold text-dark-800 dark:text-white">10x</p>
+                    <p class="text-sm text-dark-600 dark:text-gray-400">Faster Learning</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <script>
+        document.addEventListener('alpine:init', () => {
+          Alpine.data('hero', () => ({
+            showVideo: false
+          }))
+        })
+      </script>
+    </section>
+
+    <!-- Key Features Grid Section -->
+    <section class="py-20 bg-gray-50 dark:bg-dark-800">
+      <div class="container mx-auto px-6">
+        <!-- Section Header -->
+        <div class="text-center mb-16">
+          <h2 class="text-3xl md:text-4xl font-bold text-dark-800 dark:text-white mb-4">
+            Powerful Features Built for Nigerian Classrooms
+          </h2>
+          <p class="text-lg text-dark-600 dark:text-gray-300 max-w-3xl mx-auto">
+            Everything teachers and students need for effective digital learning
+          </p>
+        </div>
+
+        <!-- Features Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Feature 1: Offline Functionality -->
+          <div x-data="{ expanded: false }"
+            class="bg-white dark:bg-dark-700 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
+            <div class="p-8 cursor-pointer" @click="expanded = !expanded">
+              <div class="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
+                <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
+                </svg>
+              </div>
+              <h3 class="text-xl font-bold text-dark-800 dark:text-white mb-3">100% Offline Access</h3>
+              <p class="text-dark-600 dark:text-gray-300 mb-4">
+                All content available without internet - perfect for low-connectivity areas.
+              </p>
+              <button class="text-primary font-medium flex items-center">
+                Learn More
+                <svg class="w-4 h-4 ml-1 transition-transform" :class="{ 'rotate-180': expanded }" fill="none"
+                  stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+            </div>
+            <!-- Expanded Content -->
+            <div x-show="expanded" x-collapse class="px-8 pb-8 pt-0 border-t border-gray-100 dark:border-dark-600">
+              <ul class="space-y-3 text-dark-700 dark:text-gray-300">
+                <li class="flex items-start">
+                  <svg class="w-5 h-5 text-primary mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                  <span>Works in rural areas with poor connectivity</span>
+                </li>
+                <li class="flex items-start">
+                  <svg class="w-5 h-5 text-primary mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                  <span>Syncs progress when connection is available</span>
+                </li>
+                <li class="flex items-start">
+                  <svg class="w-5 h-5 text-primary mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                  <span>Minimal storage space required</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Feature 2: Gamified Learning -->
+          <div x-data="{ expanded: false }"
+            class="bg-white dark:bg-dark-700 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
+            <div class="p-8 cursor-pointer" @click="expanded = !expanded">
+              <div class="w-14 h-14 bg-secondary/10 rounded-lg flex items-center justify-center mb-6">
+                <svg class="w-8 h-8 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z">
+                  </path>
+                </svg>
+              </div>
+              <h3 class="text-xl font-bold text-dark-800 dark:text-white mb-3">Gamified Learning</h3>
+              <p class="text-dark-600 dark:text-gray-300 mb-4">
+                Interactive quizzes and rewards make learning fun and engaging.
+              </p>
+              <button class="text-secondary font-medium flex items-center">
+                Learn More
+                <svg class="w-4 h-4 ml-1 transition-transform" :class="{ 'rotate-180': expanded }" fill="none"
+                  stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+            </div>
+            <!-- Expanded Content -->
+            <div x-show="expanded" x-collapse class="px-8 pb-8 pt-0 border-t border-gray-100 dark:border-dark-600">
+              <ul class="space-y-3 text-dark-700 dark:text-gray-300">
+                <li class="flex items-start">
+                  <svg class="w-5 h-5 text-secondary mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                  <span>Earn badges and trophies for progress</span>
+                </li>
+                <li class="flex items-start">
+                  <svg class="w-5 h-5 text-secondary mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                  <span>Competitive leaderboards (optional)</span>
+                </li>
+                <li class="flex items-start">
+                  <svg class="w-5 h-5 text-secondary mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                  <span>75% increase in student engagement</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Feature 3: Voice Coaching -->
+          <div x-data="{ expanded: false }"
+            class="bg-white dark:bg-dark-700 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
+            <div class="p-8 cursor-pointer" @click="expanded = !expanded">
+              <div class="w-14 h-14 bg-accent/10 rounded-lg flex items-center justify-center mb-6">
+                <svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z">
+                  </path>
+                </svg>
+              </div>
+              <h3 class="text-xl font-bold text-dark-800 dark:text-white mb-3">Voice Coaching</h3>
+              <p class="text-dark-600 dark:text-gray-300 mb-4">
+                AI-powered pronunciation help for English and local languages.
+              </p>
+              <button class="text-accent font-medium flex items-center">
+                Learn More
+                <svg class="w-4 h-4 ml-1 transition-transform" :class="{ 'rotate-180': expanded }" fill="none"
+                  stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+            </div>
+            <!-- Expanded Content -->
+            <div x-show="expanded" x-collapse class="px-8 pb-8 pt-0 border-t border-gray-100 dark:border-dark-600">
+              <ul class="space-y-3 text-dark-700 dark:text-gray-300">
+                <li class="flex items-start">
+                  <svg class="w-5 h-5 text-accent mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                  <span>Real-time feedback on pronunciation</span>
+                </li>
+                <li class="flex items-start">
+                  <svg class="w-5 h-5 text-accent mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                  <span>Supports English and major Nigerian languages</span>
+                </li>
+                <li class="flex items-start">
+                  <svg class="w-5 h-5 text-accent mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                  <span>Works completely offline</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Feature 4: Curriculum Alignment -->
+          <div x-data="{ expanded: false }"
+            class="bg-white dark:bg-dark-700 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
+            <div class="p-8 cursor-pointer" @click="expanded = !expanded">
+              <div class="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
+                <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2">
+                  </path>
+                </svg>
+              </div>
+              <h3 class="text-xl font-bold text-dark-800 dark:text-white mb-3">Curriculum Alignment</h3>
+              <p class="text-dark-600 dark:text-gray-300 mb-4">
+                Matches Nigerian educational standards for all core subjects.
+              </p>
+              <button class="text-primary font-medium flex items-center">
+                Learn More
+                <svg class="w-4 h-4 ml-1 transition-transform" :class="{ 'rotate-180': expanded }" fill="none"
+                  stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+            </div>
+            <!-- Expanded Content -->
+            <div x-show="expanded" x-collapse class="px-8 pb-8 pt-0 border-t border-gray-100 dark:border-dark-600">
+              <ul class="space-y-3 text-dark-700 dark:text-gray-300">
+                <li class="flex items-start">
+                  <svg class="w-5 h-5 text-primary mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                  <span>Approved by Nigerian educational boards</span>
+                </li>
+                <li class="flex items-start">
+                  <svg class="w-5 h-5 text-primary mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                  <span>Covers primary and secondary levels</span>
+                </li>
+                <li class="flex items-start">
+                  <svg class="w-5 h-5 text-primary mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                  <span>Regularly updated content</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Feature 5: Teacher Dashboard -->
+          <div x-data="{ expanded: false }"
+            class="bg-white dark:bg-dark-700 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
+            <div class="p-8 cursor-pointer" @click="expanded = !expanded">
+              <div class="w-14 h-14 bg-secondary/10 rounded-lg flex items-center justify-center mb-6">
+                <svg class="w-8 h-8 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z">
+                  </path>
+                </svg>
+              </div>
+              <h3 class="text-xl font-bold text-dark-800 dark:text-white mb-3">Teacher Dashboard</h3>
+              <p class="text-dark-600 dark:text-gray-300 mb-4">
+                Track student progress and assign lessons with ease.
+              </p>
+              <button class="text-secondary font-medium flex items-center">
+                Learn More
+                <svg class="w-4 h-4 ml-1 transition-transform" :class="{ 'rotate-180': expanded }" fill="none"
+                  stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+            </div>
+            <!-- Expanded Content -->
+            <div x-show="expanded" x-collapse class="px-8 pb-8 pt-0 border-t border-gray-100 dark:border-dark-600">
+              <ul class="space-y-3 text-dark-700 dark:text-gray-300">
+                <li class="flex items-start">
+                  <svg class="w-5 h-5 text-secondary mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                  <span>Real-time class performance analytics</span>
+                </li>
+                <li class="flex items-start">
+                  <svg class="w-5 h-5 text-secondary mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                  <span>Automated grading for quizzes</span>
+                </li>
+                <li class="flex items-start">
+                  <svg class="w-5 h-5 text-secondary mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                  <span>Individual student progress reports</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Feature 6: Parent Progress Tracking -->
+          <div x-data="{ expanded: false }"
+            class="bg-white dark:bg-dark-700 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
+            <div class="p-8 cursor-pointer" @click="expanded = !expanded">
+              <div class="w-14 h-14 bg-accent/10 rounded-lg flex items-center justify-center mb-6">
+                <svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
+                  </path>
+                </svg>
+              </div>
+              <h3 class="text-xl font-bold text-dark-800 dark:text-white mb-3">Parent Progress Tracking</h3>
+              <p class="text-dark-600 dark:text-gray-300 mb-4">
+                Monitor your child's learning journey in real-time.
+              </p>
+              <button class="text-accent font-medium flex items-center">
+                Learn More
+                <svg class="w-4 h-4 ml-1 transition-transform" :class="{ 'rotate-180': expanded }" fill="none"
+                  stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+            </div>
+            <!-- Expanded Content -->
+            <div x-show="expanded" x-collapse class="px-8 pb-8 pt-0 border-t border-gray-100 dark:border-dark-600">
+              <ul class="space-y-3 text-dark-700 dark:text-gray-300">
+                <li class="flex items-start">
+                  <svg class="w-5 h-5 text-accent mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                  <span>Weekly progress reports via email</span>
+                </li>
+                <li class="flex items-start">
+                  <svg class="w-5 h-5 text-accent mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                  <span>See time spent on each subject</span>
+                </li>
+                <li class="flex items-start">
+                  <svg class="w-5 h-5 text-accent mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                  <span>Identify areas needing improvement</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Deep-Dive Feature Sections -->
+    <section class="py-20 bg-white dark:bg-dark-900">
+      <div class="container mx-auto px-6">
+
+        <!-- 1. Offline Learning Feature -->
+        <div class="flex flex-col lg:flex-row items-center gap-12 mb-32">
+          <!-- Left Column - Visual -->
+          <div class="lg:w-1/2" data-aos="fade-right">
+            <div class="relative">
+              <!-- Device Frame -->
+              <div class="relative mx-auto" style="max-width: 500px">
+                <img
+                  src="/image/laptop_with_screenshot2.png"
+                  alt="SmartBooks offline mode"
+                  class="rounded-[26px] overflow-hidden w-full object-cover">
+              </div>
+              <!-- Floating Badge -->
+              <div
+                class="absolute -bottom-6 -right-6 bg-white dark:bg-dark-800 p-4 rounded-xl shadow-lg border border-gray-200 dark:border-dark-600">
+                <div class="flex items-center">
+                  <div class="bg-primary/10 p-2 rounded-lg mr-3">
+                    <svg class="w-6 h-6 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd"
+                        d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 0l-2 2a1 1 0 101.414 1.414L8 10.414l1.293 1.293a1 1 0 001.414 0l4-4z"
+                        clip-rule="evenodd"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <p class="font-bold text-dark-800 dark:text-white">No WiFi Needed</p>
+                    <p class="text-sm text-dark-600 dark:text-gray-400">Works anywhere</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column - Text Content -->
+          <div class="lg:w-1/2" data-aos="fade-left">
+            <span
+              class="inline-block px-3 py-1 text-sm font-semibold text-primary bg-primary/10 rounded-full mb-4">Unique
+              Feature</span>
+            <h2 class="text-3xl md:text-4xl font-bold text-dark-800 dark:text-white mb-6">Learn Without Internet</h2>
+
+            <!-- How It Works -->
+            <div class="mb-8">
+              <h3 class="text-xl font-semibold text-dark-800 dark:text-white mb-4 flex items-center">
+                <span
+                  class="w-8 h-8 bg-primary/10 text-primary rounded-full flex items-center justify-center mr-3">1</span>
+                How It Works
+              </h3>
+              <ol class="space-y-4 text-dark-700 dark:text-gray-300">
+                <li class="flex items-start">
+                  <span
+                    class="flex-shrink-0 bg-primary/5 text-primary rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5">→</span>
+                  <span><strong>Download content</strong> when connected (school/home)</span>
+                </li>
+                <li class="flex items-start">
+                  <span
+                    class="flex-shrink-0 bg-primary/5 text-primary rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5">→</span>
+                  <span><strong>Access anytime</strong> - all textbooks, videos, and quizzes available offline</span>
+                </li>
+                <li class="flex items-start">
+                  <span
+                    class="flex-shrink-0 bg-primary/5 text-primary rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5">→</span>
+                  <span><strong>Syncs automatically</strong> when back online (progress, grades, etc.)</span>
+                </li>
+              </ol>
+            </div>
+
+            <!-- Benefits -->
+            <div class="mb-8">
+              <h3 class="text-xl font-semibold text-dark-800 dark:text-white mb-4 flex items-center">
+                <svg class="w-6 h-6 text-primary mr-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clip-rule="evenodd"></path>
+                </svg>
+                Key Benefits
+              </h3>
+              <ul class="space-y-3 text-dark-700 dark:text-gray-300">
+                <li class="flex items-start">
+                  <svg class="w-5 h-5 text-primary mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                  <span>Eliminates data costs for families</span>
+                </li>
+                <li class="flex items-start">
+                  <svg class="w-5 h-5 text-primary mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                  <span>Works in rural areas with poor connectivity</span>
+                </li>
+                <li class="flex items-start">
+                  <svg class="w-5 h-5 text-primary mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                  <span>Uses minimal phone storage (optimized content)</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Testimonial -->
+            <div class="bg-gray-50 dark:bg-dark-800 p-6 rounded-lg border border-gray-200 dark:border-dark-700">
+              <div class="flex items-start">
+                <img src="/image/teacher1.png" alt="Teacher"
+                  class="w-12 h-12 rounded-full mr-4">
+                <div>
+                  <p class="text-dark-700 dark:text-gray-300 italic mb-2">"Our students in rural Ogun State can now
+                    learn as effectively as those in Lagos. SmartBooks removed our internet dependency completely."</p>
+                  <p class="text-sm font-medium text-dark-800 dark:text-white">- Amina Yusuf, Head Teacher</p>
+                  <div class="flex mt-1">
+                    <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                      <path
+                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                      </path>
+                    </svg>
+                    <span class="text-xs ml-1 text-dark-600 dark:text-gray-400">5/5 rating from 120+ teachers</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Gamified Learning Feature -->
+        <div class="flex flex-col lg:flex-row-reverse items-center gap-12 mb-32">
+          <!-- Left Column - Visual -->
+          <div class="lg:w-1/2" data-aos="fade-left">
+              <div class="relative">
+                <!-- Device Frame -->
+                <div class="relative mx-auto" style="max-width: 500px">
+                  <img
+                    src="/image/laptop_with_screenshot3.png"
+                    alt="SmartBooks offline mode"
+                    class="rounded-[26px] overflow-hidden w-full object-cover">
+                </div>
+              <!-- Floating Badge -->
+              <div
+                class="absolute -bottom-6 -left-6 bg-white dark:bg-dark-800 p-4 rounded-xl shadow-lg border border-gray-200 dark:border-dark-600">
+                <div class="flex items-center">
+                  <div class="bg-secondary/10 p-2 rounded-lg mr-3">
+                    <svg class="w-6 h-6 text-secondary" fill="currentColor" viewBox="0 0 20 20">
+                      <path
+                        d="M10 3.22l-.61-.6a5.5 5.5 0 0 0-7.666.105 5.5 5.5 0 0 0-.114 7.665L10 18.78l8.39-8.4a5.5 5.5 0 0 0-.114-7.665 5.5 5.5 0 0 0-7.666-.105l-.61.61z">
+                      </path>
+                    </svg>
+                  </div>
+                  <div>
+                    <p class="font-bold text-dark-800 dark:text-white">75% More Engagement</p>
+                    <p class="text-sm text-dark-600 dark:text-gray-400">Reported by teachers</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column - Text Content -->
+          <div class="lg:w-1/2" data-aos="fade-right">
+            <span
+              class="inline-block px-3 py-1 text-sm font-semibold text-secondary bg-secondary/10 rounded-full mb-4">Student
+              Favorite</span>
+            <h2 class="text-3xl md:text-4xl font-bold text-dark-800 dark:text-white mb-6">Learning That Feels Like Play
+            </h2>
+
+            <!-- How It Works -->
+            <div class="mb-8">
+              <h3 class="text-xl font-semibold text-dark-800 dark:text-white mb-4 flex items-center">
+                <span
+                  class="w-8 h-8 bg-secondary/10 text-secondary rounded-full flex items-center justify-center mr-3">1</span>
+                How It Works
+              </h3>
+              <ol class="space-y-4 text-dark-700 dark:text-gray-300">
+                <li class="flex items-start">
+                  <span
+                    class="flex-shrink-0 bg-secondary/5 text-secondary rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5">→</span>
+                  <span><strong>Earn points & badges</strong> for completing lessons</span>
+                </li>
+                <li class="flex items-start">
+                  <span
+                    class="flex-shrink-0 bg-secondary/5 text-secondary rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5">→</span>
+                  <span><strong>Unlock avatars & rewards</strong> for consistent progress</span>
+                </li>
+                <li class="flex items-start">
+                  <span
+                    class="flex-shrink-0 bg-secondary/5 text-secondary rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5">→</span>
+                  <span><strong>Class leaderboards</strong> (optional competitive mode)</span>
+                </li>
+              </ol>
+            </div>
+
+            <!-- Benefits -->
+            <div class="mb-8">
+              <h3 class="text-xl font-semibold text-dark-800 dark:text-white mb-4 flex items-center">
+                <svg class="w-6 h-6 text-secondary mr-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clip-rule="evenodd"></path>
+                </svg>
+                Key Benefits
+              </h3>
+              <ul class="space-y-3 text-dark-700 dark:text-gray-300">
+                <li class="flex items-start">
+                  <svg class="w-5 h-5 text-secondary mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                  <span>Makes studying enjoyable for reluctant learners</span>
+                </li>
+                <li class="flex items-start">
+                  <svg class="w-5 h-5 text-secondary mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                  <span>Encourages daily practice with streak rewards</span>
+                </li>
+                <li class="flex items-start">
+                  <svg class="w-5 h-5 text-secondary mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                  <span>30% increase in homework completion rates</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Testimonial -->
+            <div class="bg-gray-50 dark:bg-dark-800 p-6 rounded-lg border border-gray-200 dark:border-dark-700">
+              <div class="flex items-start">
+                <img src="/image/parent.png" alt="Student"
+                  class="w-12 h-12 rounded-full mr-4">
+                <div>
+                  <p class="text-dark-700 dark:text-gray-300 italic mb-2">"I used to hate math, but now I compete with
+                    friends to earn points. My grades went from C to A in one term!"</p>
+                  <p class="text-sm font-medium text-dark-800 dark:text-white">- Emeka Okonkwo, JSS2 Student</p>
+                  <div class="flex mt-1">
+                    <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                      <path
+                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                      </path>
+                    </svg>
+                    <span class="text-xs ml-1 text-dark-600 dark:text-gray-400">4.9/5 from 1,200+ students</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Voice Coaching Feature -->
+        <div class="flex flex-col lg:flex-row items-center gap-12">
+          <!-- Left Column - Visual -->
+          <div class="lg:w-1/2" data-aos="fade-right">
+            <div class="relative">
+              <!-- Device Frame -->
+              <div class="relative mx-auto" style="max-width: 500px">
+                <img
+                  src="/image/laptop_with_screenshot4.png"
+                  alt="SmartBooks offline mode"
+                  class="rounded-[26px] overflow-hidden w-full object-cover">
+              </div>
+              <!-- Floating Badge -->
+              <div
+                class="absolute -bottom-6 -right-6 bg-white dark:bg-dark-800 p-4 rounded-xl shadow-lg border border-gray-200 dark:border-dark-600">
+                <div class="flex items-center">
+                  <div class="bg-accent/10 p-2 rounded-lg mr-3">
+                    <svg class="w-6 h-6 text-accent" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd"
+                        d="M7 4a3 3 0 016 0v4a3 3 0 11-6 0V4zm4 10.93A7.001 7.001 0 0017 8a1 1 0 10-2 0A5 5 0 015 8a1 1 0 00-2 0 7.001 7.001 0 006 6.93V17H6a1 1 0 100 2h8a1 1 0 100-2h-3v-2.07z"
+                        clip-rule="evenodd"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <p class="font-bold text-dark-800 dark:text-white">AI-Powered</p>
+                    <p class="text-sm text-dark-600 dark:text-gray-400">Works Offline</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column - Text Content -->
+          <div class="lg:w-1/2" data-aos="fade-left">
+            <span
+              class="inline-block px-3 py-1 text-sm font-semibold text-accent bg-accent/10 rounded-full mb-4">Innovative
+              Tech</span>
+            <h2 class="text-3xl md:text-4xl font-bold text-dark-800 dark:text-white mb-6">Voice Coaching Assistant</h2>
+
+            <!-- How It Works -->
+            <div class="mb-8">
+              <h3 class="text-xl font-semibold text-dark-800 dark:text-white mb-4 flex items-center">
+                <span
+                  class="w-8 h-8 bg-accent/10 text-accent rounded-full flex items-center justify-center mr-3">1</span>
+                How It Works
+              </h3>
+              <ol class="space-y-4 text-dark-700 dark:text-gray-300">
+                <li class="flex items-start">
+                  <span
+                    class="flex-shrink-0 bg-accent/5 text-accent rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5">→</span>
+                  <span><strong>Read aloud</strong> any text in English or local languages</span>
+                </li>
+                <li class="flex items-start">
+                  <span
+                    class="flex-shrink-0 bg-accent/5 text-accent rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5">→</span>
+                  <span><strong>Get instant feedback</strong> on pronunciation</span>
+                </li>
+                <li class="flex items-start">
+                  <span
+                    class="flex-shrink-0 bg-accent/5 text-accent rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5">→</span>
+                  <span><strong>Practice with exercises</strong> tailored to common Nigerian speech patterns</span>
+                </li>
+              </ol>
+            </div>
+
+            <!-- Benefits -->
+            <div class="mb-8">
+              <h3 class="text-xl font-semibold text-dark-800 dark:text-white mb-4 flex items-center">
+                <svg class="w-6 h-6 text-accent mr-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clip-rule="evenodd"></path>
+                </svg>
+                Key Benefits
+              </h3>
+              <ul class="space-y-3 text-dark-700 dark:text-gray-300">
+                <li class="flex items-start">
+                  <svg class="w-5 h-5 text-accent mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                  <span>Builds confidence in English pronunciation</span>
+                </li>
+                <li class="flex items-start">
+                  <svg class="w-5 h-5 text-accent mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                  <span>Supports Hausa, Yoruba, and Igbo language practice</span>
+                </li>
+                <li class="flex items-start">
+                  <svg class="w-5 h-5 text-accent mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                  <span>40% faster reading fluency improvement</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Testimonial -->
+            <div class="bg-gray-50 dark:bg-dark-800 p-6 rounded-lg border border-gray-200 dark:border-dark-700">
+              <div class="flex items-start">
+                <img src="/image/teacher2.png" alt="Parent"
+                  class="w-12 h-12 rounded-full mr-4">
+                <div>
+                  <p class="text-dark-700 dark:text-gray-300 italic mb-2">"My son used to be shy speaking English. After
+                    3 months with SmartBooks' voice coach, he won his school's debate competition!"</p>
+                  <p class="text-sm font-medium text-dark-800 dark:text-white">- Samuel Adeleke, Parent</p>
+                  <div class="flex mt-1">
+                    <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                      <path
+                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                      </path>
+                    </svg>
+                    <span class="text-xs ml-1 text-dark-600 dark:text-gray-400">94% of parents report improvement</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Target Audience Benefits Section -->
+    <section class="py-20 bg-gray-50 dark:bg-dark-800" x-data="{ activeTab: 'students' }">
+      <div class="container mx-auto px-6">
+        <!-- Section Header -->
+        <div class="text-center mb-16">
+          <h2 class="text-3xl md:text-4xl font-bold text-dark-800 dark:text-white mb-4">
+            Designed for Everyone in the Learning Journey
+          </h2>
+          <p class="text-lg text-dark-600 dark:text-gray-300 max-w-3xl mx-auto">
+            SmartBooks delivers unique value to each member of the educational community
+          </p>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="flex flex-wrap justify-center mb-12" data-aos="fade-up">
+          <div class="border-b border-gray-200 dark:border-dark-600 w-full">
+            <nav class="-mb-px flex flex-wrap justify-center space-x-1 md:space-x-8" aria-label="Tabs">
+              <!-- Student Tab -->
+              <button @click="activeTab = 'students'"
+                :class="activeTab === 'students' ? 'border-primary text-primary dark:text-primary' : 'border-transparent text-dark-600 hover:text-dark-800 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'"
+                class="whitespace-nowrap py-4 px-1 md:px-4 border-b-2 font-medium text-sm md:text-base transition-colors duration-200">
+                <div class="flex items-center">
+                  <svg class="w-5 h-5 mr-2"
+                    :class="activeTab === 'students' ? 'text-primary' : 'text-gray-400 dark:text-gray-500'" fill="none"
+                    stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
+                    </path>
+                  </svg>
+                  For Students
+                </div>
+              </button>
+
+              <!-- Teacher Tab -->
+              <button @click="activeTab = 'teachers'"
+                :class="activeTab === 'teachers' ? 'border-secondary text-secondary dark:text-secondary' : 'border-transparent text-dark-600 hover:text-dark-800 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'"
+                class="whitespace-nowrap py-4 px-1 md:px-4 border-b-2 font-medium text-sm md:text-base transition-colors duration-200">
+                <div class="flex items-center">
+                  <svg class="w-5 h-5 mr-2"
+                    :class="activeTab === 'teachers' ? 'text-secondary' : 'text-gray-400 dark:text-gray-500'"
+                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707M7 7v10m0-3.535l3.535-3.536M7 7l3.535 3.535M17 7v10m0-3.536l-3.535-3.536M17 7l-3.535 3.535">
+                    </path>
+                  </svg>
+                  For Teachers
+                </div>
+              </button>
+
+              <!-- Parent Tab -->
+              <button @click="activeTab = 'parents'"
+                :class="activeTab === 'parents' ? 'border-accent text-accent dark:text-accent' : 'border-transparent text-dark-600 hover:text-dark-800 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'"
+                class="whitespace-nowrap py-4 px-1 md:px-4 border-b-2 font-medium text-sm md:text-base transition-colors duration-200">
+                <div class="flex items-center">
+                  <svg class="w-5 h-5 mr-2"
+                    :class="activeTab === 'parents' ? 'text-accent' : 'text-gray-400 dark:text-gray-500'" fill="none"
+                    stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
+                    </path>
+                  </svg>
+                  For Parents
+                </div>
+              </button>
+
+              <!-- School Tab -->
+              <button @click="activeTab = 'schools'"
+                :class="activeTab === 'schools' ? 'border-primary text-primary dark:text-primary' : 'border-transparent text-dark-600 hover:text-dark-800 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'"
+                class="whitespace-nowrap py-4 px-1 md:px-4 border-b-2 font-medium text-sm md:text-base transition-colors duration-200">
+                <div class="flex items-center">
+                  <svg class="w-5 h-5 mr-2"
+                    :class="activeTab === 'schools' ? 'text-primary' : 'text-gray-400 dark:text-gray-500'" fill="none"
+                    stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
+                    </path>
+                  </svg>
+                  For Schools
+                </div>
+              </button>
+            </nav>
+          </div>
+        </div>
+
+        <!-- Tab Content -->
+        <div class="max-w-5xl mx-auto">
+          <!-- Students Content -->
+          <div x-show="activeTab === 'students'" x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" class="space-y-8">
+            <div class="flex flex-col lg:flex-row items-center gap-8">
+              <div class="lg:w-1/2" data-aos="fade-right">
+                <img
+                  src="/image/nigeria-student-tablets.png"
+                  alt="Students using SmartBooks" class="rounded-xl shadow-lg w-full">
+              </div>
+              <div class="lg:w-1/2" data-aos="fade-left">
+                <h3 class="text-2xl font-bold text-dark-800 dark:text-white mb-4">Engaging Learning Experience</h3>
+                <ul class="space-y-4 text-dark-700 dark:text-gray-300">
+                  <li class="flex items-start">
+                    <div class="bg-primary/10 p-2 rounded-lg mr-4">
+                      <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clip-rule="evenodd"></path>
+                      </svg>
+                    </div>
+                    <span>Interactive lessons with animations and quizzes</span>
+                  </li>
+                  <li class="flex items-start">
+                    <div class="bg-primary/10 p-2 rounded-lg mr-4">
+                      <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clip-rule="evenodd"></path>
+                      </svg>
+                    </div>
+                    <span>Earn badges and rewards for progress</span>
+                  </li>
+                  <li class="flex items-start">
+                    <div class="bg-primary/10 p-2 rounded-lg mr-4">
+                      <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clip-rule="evenodd"></path>
+                      </svg>
+                    </div>
+                    <span>Voice coaching for reading and pronunciation</span>
+                  </li>
+                  <li class="flex items-start">
+                    <div class="bg-primary/10 p-2 rounded-lg mr-4">
+                      <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clip-rule="evenodd"></path>
+                      </svg>
+                    </div>
+                    <span>Accessible on low-end Android devices</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="bg-white dark:bg-dark-700 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-dark-600">
+              <div class="flex items-start">
+                <img src="/image/ratedstudent1.png" alt="Student"
+                  class="w-12 h-12 rounded-full mr-4">
+                <div>
+                  <p class="text-dark-700 dark:text-gray-300 italic mb-2">"I love how SmartBooks makes math fun with
+                    games. I went from hating fractions to being the best in my class!"</p>
+                  <p class="text-sm font-medium text-dark-800 dark:text-white">- Fatima Abdullah, Primary 5 Student</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Teachers Content -->
+          <div x-show="activeTab === 'teachers'" x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" class="space-y-8">
+            <div class="flex flex-col lg:flex-row items-center gap-8">
+              <div class="lg:w-1/2" data-aos="fade-right">
+                <img
+                  src="/image/nigerian_classroom.png"
+                  alt="Teacher using SmartBooks" class="rounded-xl shadow-lg w-full">
+              </div>
+              <div class="lg:w-1/2" data-aos="fade-left">
+                <h3 class="text-2xl font-bold text-dark-800 dark:text-white mb-4">Powerful Classroom Tools</h3>
+                <ul class="space-y-4 text-dark-700 dark:text-gray-300">
+                  <li class="flex items-start">
+                    <div class="bg-secondary/10 p-2 rounded-lg mr-4">
+                      <svg class="w-5 h-5 text-secondary" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clip-rule="evenodd"></path>
+                      </svg>
+                    </div>
+                    <span>Automated grading for quizzes and assignments</span>
+                  </li>
+                  <li class="flex items-start">
+                    <div class="bg-secondary/10 p-2 rounded-lg mr-4">
+                      <svg class="w-5 h-5 text-secondary" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clip-rule="evenodd"></path>
+                      </svg>
+                    </div>
+                    <span>Real-time class performance analytics</span>
+                  </li>
+                  <li class="flex items-start">
+                    <div class="bg-secondary/10 p-2 rounded-lg mr-4">
+                      <svg class="w-5 h-5 text-secondary" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clip-rule="evenodd"></path>
+                      </svg>
+                    </div>
+                    <span>Create and share custom lesson plans</span>
+                  </li>
+                  <li class="flex items-start">
+                    <div class="bg-secondary/10 p-2 rounded-lg mr-4">
+                      <svg class="w-5 h-5 text-secondary" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clip-rule="evenodd"></path>
+                      </svg>
+                    </div>
+                    <span>Identify struggling students instantly</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="bg-white dark:bg-dark-700 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-dark-600">
+              <div class="flex items-start">
+                <img src="/image/teacher3.png" alt="Teacher"
+                  class="w-12 h-12 rounded-full mr-4">
+                <div>
+                  <p class="text-dark-700 dark:text-gray-300 italic mb-2">"The analytics dashboard saves me 10+ hours
+                    weekly on grading. I can now focus on actual teaching instead of paperwork."</p>
+                  <p class="text-sm font-medium text-dark-800 dark:text-white">- Mr. Okafor, Secondary School Teacher
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Parents Content -->
+          <div x-show="activeTab === 'parents'" x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" class="space-y-8">
+            <div class="flex flex-col lg:flex-row items-center gap-8">
+              <div class="lg:w-1/2" data-aos="fade-right">
+                <img
+                  src="/image/african_professor.png"
+                  alt="Parent reviewing child's progress" class="rounded-xl shadow-lg w-full">
+              </div>
+              <div class="lg:w-1/2" data-aos="fade-left">
+                <h3 class="text-2xl font-bold text-dark-800 dark:text-white mb-4">Stay Connected to Your Child's
+                  Learning</h3>
+                <ul class="space-y-4 text-dark-700 dark:text-gray-300">
+                  <li class="flex items-start">
+                    <div class="bg-accent/10 p-2 rounded-lg mr-4">
+                      <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clip-rule="evenodd"></path>
+                      </svg>
+                    </div>
+                    <span>Weekly progress reports via email/SMS</span>
+                  </li>
+                  <li class="flex items-start">
+                    <div class="bg-accent/10 p-2 rounded-lg mr-4">
+                      <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clip-rule="evenodd"></path>
+                      </svg>
+                    </div>
+                    <span>See time spent on each subject</span>
+                  </li>
+                  <li class="flex items-start">
+                    <div class="bg-accent/10 p-2 rounded-lg mr-4">
+                      <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clip-rule="evenodd"></path>
+                      </svg>
+                    </div>
+                    <span>Receive alerts for missed assignments</span>
+                  </li>
+                  <li class="flex items-start">
+                    <div class="bg-accent/10 p-2 rounded-lg mr-4">
+                      <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clip-rule="evenodd"></path>
+                      </svg>
+                    </div>
+                    <span>Compare performance to class average</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="bg-white dark:bg-dark-700 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-dark-600">
+              <div class="flex items-start">
+                <img src="/image/parent1.png" alt="Parent"
+                  class="w-12 h-12 rounded-full mr-4">
+                <div>
+                  <p class="text-dark-700 dark:text-gray-300 italic mb-2">"As a working mother, I love getting SMS
+                    updates about my son's progress. I can support his learning even when I'm not home."</p>
+                  <p class="text-sm font-medium text-dark-800 dark:text-white">- Mrs. Adebayo, Parent</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Schools Content -->
+          <div x-show="activeTab === 'schools'" x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" class="space-y-8">
+            <div class="flex flex-col lg:flex-row items-center gap-8">
+              <div class="lg:w-1/2" data-aos="fade-right">
+                <img
+                  src="/image/smartbook_advantages.png"
+                  alt="School administration" class="rounded-xl shadow-lg w-full">
+              </div>
+              <div class="lg:w-1/2" data-aos="fade-left">
+                <h3 class="text-2xl font-bold text-dark-800 dark:text-white mb-4">Administrative Advantages</h3>
+                <ul class="space-y-4 text-dark-700 dark:text-gray-300">
+                  <li class="flex items-start">
+                    <div class="bg-primary/10 p-2 rounded-lg mr-4">
+                      <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clip-rule="evenodd"></path>
+                      </svg>
+                    </div>
+                    <span>60% reduction in textbook costs</span>
+                  </li>
+                  <li class="flex items-start">
+                    <div class="bg-primary/10 p-2 rounded-lg mr-4">
+                      <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clip-rule="evenodd"></path>
+                      </svg>
+                    </div>
+                    <span>Centralized learning platform for all classes</span>
+                  </li>
+                  <li class="flex items-start">
+                    <div class="bg-primary/10 p-2 rounded-lg mr-4">
+                      <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clip-rule="evenodd"></path>
+                      </svg>
+                    </div>
+                    <span>Bulk discounts for school-wide adoption</span>
+                  </li>
+                  <li class="flex items-start">
+                    <div class="bg-primary/10 p-2 rounded-lg mr-4">
+                      <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clip-rule="evenodd"></path>
+                      </svg>
+                    </div>
+                    <span>Standardized curriculum across branches</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="bg-white dark:bg-dark-700 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-dark-600">
+              <div class="flex items-start">
+                <img src="/image/teacher4.png" alt="School administrator"
+                  class="w-12 h-12 rounded-full mr-4">
+                <div>
+                  <p class="text-dark-700 dark:text-gray-300 italic mb-2">"We saved ₦2.3 million in our first year by
+                    switching to SmartBooks. The quality of education improved while costs went down."</p>
+                  <p class="text-sm font-medium text-dark-800 dark:text-white">- Mrs. Johnson, School Proprietress</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-dark-800 text-white pt-16 pb-8">
+    <div class="container mx-auto px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mb-12">
+        <!-- Column 1 -->
+        <div>
+          <div class="flex items-center mb-6">
+            <svg class="w-8 h-8 text-primary mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M12 6.25278V19.2528M12 6.25278C10.8324 5.47686 9.24649 5 7.5 5C5.75351 5 4.16756 5.47686 3 6.25278V19.2528C4.16756 18.4769 5.75351 18 7.5 18C9.24649 18 10.8324 18.4769 12 19.2528M12 6.25278C13.1676 5.47686 14.7535 5 16.5 5C18.2465 5 19.8324 5.47686 21 6.25278V19.2528C19.8324 18.4769 18.2465 18 16.5 18C14.7535 18 13.1676 18.4769 12 19.2528"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <img src="/image/logo.png" alt="logo">
+          </div>
+          <p class="text-gray-400 mb-6">
+            Nigeria's premier offline digital textbook app for primary and
+            secondary school learners.
+          </p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-white transition-colors">
+              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z">
+                </path>
+              </svg>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors">
+              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.26 1.699-4.771 4.92-4.919 1.265-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+              </svg>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors">
+              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Column 2 -->
+        <div>
+          <h3 class="text-lg font-semibold mb-6">Quick Links</h3>
+          <ul class="space-y-3">
+            <li>
+              <a href="#" class="text-gray-400 hover:text-white transition-colors">Home</a>
+            </li>
+            <li>
+              <a href="#" class="text-gray-400 hover:text-white transition-colors">About Us</a>
+            </li>
+            <li>
+              <a href="#" class="text-gray-400 hover:text-white transition-colors">Features</a>
+            </li>
+            <li>
+              <a href="#" class="text-gray-400 hover:text-white transition-colors">Subjects</a>
+            </li>
+            <li>
+              <a href="#" class="text-gray-400 hover:text-white transition-colors">Download</a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Column 3 -->
+        <div>
+          <h3 class="text-lg font-semibold mb-6">Contact Us</h3>
+          <ul class="space-y-3">
+            <li class="flex items-start">
+              <svg class="w-5 h-5 text-gray-400 mr-3 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              </svg>
+              <span class="text-gray-400">123 Education Road, Lagos, Nigeria</span>
+            </li>
+            <li class="flex items-center">
+              <svg class="w-5 h-5 text-gray-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                </path>
+              </svg>
+              <span class="text-gray-400">info@smartbooks.ng</span>
+            </li>
+            <li class="flex items-center">
+              <svg class="w-5 h-5 text-gray-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
+                </path>
+              </svg>
+              <span class="text-gray-400">+234 800 123 4567</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center">
+        <p class="text-gray-400 text-sm mb-4 md:mb-0">
+          &copy; 2023 SmartBooks. All rights reserved.
+        </p>
+        <div class="flex space-x-6">
+          <a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">Privacy Policy</a>
+          <a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">Terms of Service</a>
+          <a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">Cookie Policy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Initialize AOS animations
+    AOS.init({
+      duration: 800,
+      easing: "ease-in-out-quad",
+      once: true,
+      offset: 100,
+    });
+
+    // Theme toggle functionality
+    document.addEventListener("DOMContentLoaded", function () {
+      const themeToggle = document.getElementById("theme-toggle");
+      const html = document.documentElement;
+
+      // Check for saved preference
+      if (localStorage.getItem("theme") === "dark") {
+        html.classList.add("dark");
+        themeToggle.checked = true;
+      }
+
+      // Toggle handler
+      themeToggle.addEventListener("change", function () {
+        if (this.checked) {
+          html.classList.add("dark");
+          localStorage.setItem("theme", "dark");
+        } else {
+          html.classList.remove("dark");
+          localStorage.setItem("theme", "light");
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>
